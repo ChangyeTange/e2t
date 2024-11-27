@@ -49,24 +49,6 @@ class RI(BaseNN):
         self.W1 = RI.weight_variable([self.n_bins, 1])
         self.b1 = tf.Variable(tf.zeros([1]))
 
-    def load_word2vec(self, emb_file_path):
-        emb = np.random.uniform(low=-1, high=1, size=(self.vocabulary_size + 1, self.embedding_size))
-        nlines = 0
-        with open(emb_file_path) as f:
-            for line in f:
-                nlines += 1
-                if nlines == 1:
-                    continue
-                items = line.split()
-                tid = int(items[0])
-                if tid > self.vocabulary_size:
-                    print (tid)
-                    continue
-                vec = np.array([float(t) for t in items[1:]])
-                emb[tid, :] = vec
-                if nlines % 20000 == 0:
-                    print ("load {0} vectors...".format(nlines))
-        return emb
 
     def model(self, inputs_q, inputs_d, mask, q_weights, mu, sigma):
         """
